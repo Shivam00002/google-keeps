@@ -27,6 +27,7 @@ const Login: React.FC = () => {
       const data = await response.json();
       if (response.ok) {
         login(data.token);
+      
         navigate('/notes');
       } else {
         setError(data.message || 'Login failed');

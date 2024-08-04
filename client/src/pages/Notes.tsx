@@ -36,10 +36,11 @@ const Notes: React.FC = () => {
         const data = await response.json();
         setNotes(data);
       } else {
-        setError('Failed to fetch notes');
+        throw new Error('Failed to fetch notes');
       }
     } catch (err) {
       setError('An error occurred while fetching notes');
+      console.error(err);
     }
   };
 
@@ -59,15 +60,16 @@ const Notes: React.FC = () => {
         body: JSON.stringify({ title, content }),
       });
       if (response.ok) {
-        fetchNotes();
+        await fetchNotes();
         setTitle("");
         setContent("");
         setEditingNote(null);
       } else {
-        setError('Failed to save note');
+        throw new Error('Failed to save note');
       }
     } catch (err) {
       setError('An error occurred while saving the note');
+      console.error(err);
     }
   };
 
@@ -80,12 +82,13 @@ const Notes: React.FC = () => {
         },
       });
       if (response.ok) {
-        fetchNotes();
+        await fetchNotes();
       } else {
-        setError('Failed to delete note');
+        throw new Error('Failed to delete note');
       }
     } catch (err) {
       setError('An error occurred while deleting the note');
+      console.error(err);
     }
   };
 

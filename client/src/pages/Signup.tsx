@@ -38,7 +38,10 @@ const Signup: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
+        localStorage.setItem("token", data.token); // Save token to localStorage
+        console.log("dataaaa" , data)
         login(data.token);
+      
         navigate("/notes");
       } else {
         setError(data.message || "Signup failed");
@@ -101,13 +104,32 @@ const Signup: React.FC = () => {
             type="submit"
             disabled={loading}
             className={`w-full py-2 rounded-md transition duration-300 ${
-              loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
             } text-white`}
           >
             {loading ? (
-              <svg className="animate-spin h-6 w-6  mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="none" stroke="currentColor" strokeWidth="4" d="M4 12a8 8 0 018-8V4a10 10 0 00-10 10h2z"></path>
+              <svg
+                className="animate-spin h-6 w-6  mx-auto"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  d="M4 12a8 8 0 018-8V4a10 10 0 00-10 10h2z"
+                ></path>
               </svg>
             ) : (
               "Sign Up"
