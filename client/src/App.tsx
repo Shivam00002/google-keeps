@@ -24,6 +24,6 @@ const App: React.FC = () => {
       </div>
     </AuthProvider>
   );
-}
+};
 
 export default App;
