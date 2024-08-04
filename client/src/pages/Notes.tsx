@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { backend_url } from "../libs/url";
 
 interface Note {
   id: string;
@@ -27,7 +28,7 @@ const Notes: React.FC = () => {
 
   const fetchNotes = async () => {
     try {
-      const response = await fetch('https://dainsta-backend-git-main-shivam-dubeys-projects-e404231e.vercel.app/notes', {
+      const response = await fetch(`${backend_url}/notes`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
@@ -48,8 +49,8 @@ const Notes: React.FC = () => {
     e.preventDefault();
     try {
       const url = editingNote
-        ? `https://dainsta-backend-git-main-shivam-dubeys-projects-e404231e.vercel.app/notes/${editingNote.id}`
-        : 'https://dainsta-backend-git-main-shivam-dubeys-projects-e404231e.vercel.app/notes';
+        ? `${backend_url}/notes/${editingNote.id}`
+        : `${backend_url}/notes`;
       const method = editingNote ? 'PUT' : 'POST';
       const response = await fetch(url, {
         method,
@@ -75,7 +76,7 @@ const Notes: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`https://dainsta-backend-git-main-shivam-dubeys-projects-e404231e.vercel.app/notes/${id}`, {
+      const response = await fetch(`${backend_url}/notes/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,

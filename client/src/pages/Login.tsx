@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { backend_url } from "../libs/url";
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -15,9 +16,8 @@ const Login: React.FC = () => {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     try {
-      const response = await fetch('https://dainsta-backend-git-main-shivam-dubeys-projects-e404231e.vercel.app/auth/login', {
+      const response = await fetch(`${backend_url}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
