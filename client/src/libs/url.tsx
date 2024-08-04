@@ -1,1 +1,1 @@
-export const backend_url="http://localhost:5000"
+export const backend_url="https://dainsta-notes-git-main-shivam-dubeys-projects-e404231e.vercel.app/"
