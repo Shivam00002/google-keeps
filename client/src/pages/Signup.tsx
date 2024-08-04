@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { backend_url } from "../libs/url";
+import toast from "react-hot-toast";
 
 const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -25,27 +26,25 @@ const Signup: React.FC = () => {
     };
 
     try {
-      const response = await fetch(
-       `${backend_url}/auth/signup`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(signupData),
-        }
-      );
+      const response = await fetch(`${backend_url}/auth/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signupData),
+      });
 
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token", data.token); // Save token to localStorage
-        console.log("dataaaa" , data)
+        localStorage.setItem("token", data.token);
+        console.log("dataaaa", data);
         login(data.token);
-      
+        toast.success("Account created successfully😍");
         navigate("/notes");
       } else {
         setError(data.message || "Signup failed");
+        toast.error("Signup failed 😣");
       }
     } catch (err) {
       setError("An error occurred. Please try again.");

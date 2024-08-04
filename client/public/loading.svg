@@ -1,0 +1,21 @@
+     <svg
+                className="animate-spin h-6 w-6  mx-auto"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  d="M4 12a8 8 0 018-8V4a10 10 0 00-10 10h2z"
+                ></path>
+              </svg>

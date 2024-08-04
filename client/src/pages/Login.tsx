@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { backend_url } from "../libs/url";
+import toast from "react-hot-toast";
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -18,22 +19,23 @@ const Login: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(`${backend_url}/auth/login`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
       if (response.ok) {
         login(data.token);
-      
-        navigate('/notes');
+        toast.success("Login successful 😍");
+        navigate("/notes");
       } else {
-        setError(data.message || 'Login failed');
+        setError(data.message || "Login failed ");
+        toast.error("Login failed 😣");
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -81,13 +83,32 @@ const Login: React.FC = () => {
             type="submit"
             disabled={loading}
             className={`w-full py-2 rounded-md transition duration-300 ${
-              loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
             } text-white`}
           >
             {loading ? (
-              <svg className="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="none" stroke="currentColor" strokeWidth="4" d="M4 12a8 8 0 018-8V4a10 10 0 00-10 10h2z"></path>
+              <svg
+                className="animate-spin h-5 w-5 mx-auto"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  d="M4 12a8 8 0 018-8V4a10 10 0 00-10 10h2z"
+                ></path>
               </svg>
             ) : (
               "Log in"

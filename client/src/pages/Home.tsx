@@ -8,7 +8,8 @@ const Home: React.FC = () => {
           Welcome to Dainsta Notes
         </h1>
         <p className="text-center text-gray-900 dark:text-white mb-4">
-          Your personal note-taking app. Start creating and managing your notes today!
+          Your personal note-taking app. Start creating and managing your notes
+          today!
         </p>
       </div>
     </div>
