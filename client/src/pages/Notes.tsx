@@ -18,8 +18,8 @@ const Notes: React.FC = () => {
   const [editingNote, setEditingNote] = useState<Note | null>(null);
   const [error, setError] = useState<string>("");
   const [loadingAdd, setLoadingAdd] = useState<boolean>(false);
-  const [loadingUpdate, setLoadingUpdate] = useState<boolean>(false);
   const [loadingFetch, setLoadingFetch] = useState<boolean>(false);
+  const [loadingUpdate, setLoadingUpdate] = useState<boolean>(false); 
   const [deletingNoteId, setDeletingNoteId] = useState<string | null>(null);
   const [isEditPopupOpen, setIsEditPopupOpen] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
@@ -109,10 +109,16 @@ const Notes: React.FC = () => {
     setIsEditPopupOpen(true);
   };
 
-  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleEditChange = async (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     if (editingNote) {
-      setLoadingUpdate(true);
+      const updatedNote = {
+        ...editingNote,
+        [e.target.name]: e.target.value,
+      };
+      setEditingNote(updatedNote);
+
       try {
         const response = await fetch(`${backend_url}/notes/${editingNote.id}`, {
           method: "PUT",
@@ -120,36 +126,22 @@ const Notes: React.FC = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify({
-            title: editingNote.title,
-            content: editingNote.content,
-          }),
+          body: JSON.stringify(updatedNote),
         });
         if (response.ok) {
-          await fetchNotes();
-          setIsEditPopupOpen(false);
-          toast.success("Note updated! ✏️");
-          setEditingNote(null);
+         
+          setNotes((prevNotes) =>
+            prevNotes.map((note) =>
+              note.id === editingNote.id ? updatedNote : note
+            )
+          );
         } else {
           throw new Error("Failed to update note");
         }
       } catch (err) {
         setError("An error occurred while updating the note");
         console.error(err);
-      } finally {
-        setLoadingUpdate(false);
       }
-    }
-  };
-
-  const handleEditChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    if (editingNote) {
-      setEditingNote({
-        ...editingNote,
-        [e.target.name]: e.target.value,
-      });
     }
   };
 
@@ -193,7 +185,6 @@ const Notes: React.FC = () => {
           note={editingNote}
           loadingUpdate={loadingUpdate}
           onClose={closeEditPopup}
-          onUpdate={handleUpdate}
           onChange={handleEditChange}
         />
       )}

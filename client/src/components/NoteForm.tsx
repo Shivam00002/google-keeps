@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import toast from "react-hot-toast";
 
 interface NoteFormProps {
   onAddNote: (title: string, content: string) => void;
@@ -7,50 +6,51 @@ interface NoteFormProps {
 }
 
 const NoteForm: React.FC<NoteFormProps> = ({ onAddNote, loadingAdd }) => {
-  const [newTitle, setNewTitle] = useState<string>("");
-  const [newContent, setNewContent] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTitle.trim() || !newContent.trim()) {
-      toast.error("Both title and content are required! 🧐");
-      return;
-    }
-    onAddNote(newTitle, newContent);
-    setNewTitle("");
-    setNewContent("");
+    onAddNote(title, content);
+    setTitle("");
+    setContent("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-8">
+    <form
+      onSubmit={handleSubmit}
+      className="mb-6 bg-white dark:bg-gray-800 p-4 rounded-md shadow-md"
+    >
       <input
         type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
-        value={newTitle}
-        onChange={(e) => setNewTitle(e.target.value)}
         className="w-full px-3 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
       />
       <textarea
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
         placeholder="Content"
-        value={newContent}
-        onChange={(e) => setNewContent(e.target.value)}
-        className="w-full px-3 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
         rows={4}
+        className="w-full px-3 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
       ></textarea>
       <button
         type="submit"
-        className={`${
-          loadingAdd ? "bg-white text-gray-700" : "bg-blue-500 text-white"
+        className={`w-full ${
+          loadingAdd
+            ? "bg-white text-gray-700 border-gray-300"
+            : "bg-blue-500 text-white"
         } px-4 py-2 rounded-md transition duration-300 ${
-          loadingAdd ? "border-gray-300" : "hover:bg-blue-600"
+          loadingAdd ? "hover:bg-gray-100" : "hover:bg-blue-600"
         }`}
         disabled={loadingAdd}
       >
         {loadingAdd ? (
           <img
             src="https://cdn-icons-gif.flaticon.com/17098/17098052.gif"
-            alt="Loading..."
-            className="inline w-10 h-5"
+            alt="Loading"
+            className="inline-block h-5 w-5"
           />
         ) : (
           "Add Note"
