@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import 'animate.css';
 
 interface Note {
   id: string;
@@ -19,12 +20,32 @@ const NoteItem: React.FC<NoteItemProps> = ({
   onDelete,
   deletingNoteId,
 }) => {
+  const [isNew, setIsNew] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setIsNew(false), 1000);
+  }, []);
+
   return (
-    <div className="bg-white dark:bg-gray-800 p-4 rounded-md shadow-md relative">
-      <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+    <div
+      className={`bg-white dark:bg-gray-800 p-4 rounded-md shadow-md relative ${
+        isNew ? "animate__animated animate__fadeInDown" : ""
+      }`}
+    >
+      <h3
+        className={`text-lg font-semibold mb-2 text-gray-900 dark:text-white ${
+          isNew ? "animate__animated animate__fadeInDown" : ""
+        }`}
+      >
         {note.title}
       </h3>
-      <p className="text-gray-700 dark:text-gray-300 mb-4">{note.content}</p>
+      <p
+        className={`text-gray-700 dark:text-gray-300 mb-4 ${
+          isNew ? "animate__animated animate__fadeIn" : ""
+        }`}
+      >
+        {note.content}
+      </p>
       <div className="flex justify-end space-x-2">
         <button
           onClick={() => onEdit(note)}
