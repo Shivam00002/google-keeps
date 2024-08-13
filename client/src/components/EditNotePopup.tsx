@@ -23,10 +23,10 @@ const EditNotePopup: React.FC<EditNotePopupProps> = ({
 }) => {
   if (!note) return null;
 
-const closeEditPopup =()=>{
-  onClose();
-  toast.success("Note updated! ✏️");
-}
+  const closeEditPopup = () => {
+    onClose();
+    toast.success("Note updated! ✏️");
+  };
 
   const handleOutsideClick = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).classList.contains("popup-overlay")) {
@@ -66,7 +66,7 @@ const closeEditPopup =()=>{
             onClick={closeEditPopup}
             className="px-4 py-0 border shadow-md rounded-md text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
           >
-         Close
+            Close
           </button>
         </div>
       </div>

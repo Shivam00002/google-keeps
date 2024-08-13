@@ -17,9 +17,8 @@ const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [editingNote, setEditingNote] = useState<Note | null>(null);
   const [error, setError] = useState<string>("");
-  const [loadingAdd, setLoadingAdd] = useState<boolean>(false);
   const [loadingFetch, setLoadingFetch] = useState<boolean>(false);
-  const [loadingUpdate, setLoadingUpdate] = useState<boolean>(false); 
+  const [loadingUpdate, setLoadingUpdate] = useState<boolean>(false);
   const [deletingNoteId, setDeletingNoteId] = useState<string | null>(null);
   const [isEditPopupOpen, setIsEditPopupOpen] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
@@ -56,8 +55,6 @@ const Notes: React.FC = () => {
   };
 
   const handleAddNote = async (title: string, content: string) => {
-    setLoadingAdd(true);
-    setError("");
     try {
       const response = await fetch(`${backend_url}/notes`, {
         method: "POST",
@@ -69,15 +66,12 @@ const Notes: React.FC = () => {
       });
       if (response.ok) {
         await fetchNotes();
-        toast.success("Note Created 😊");
       } else {
         throw new Error("Failed to add note");
       }
     } catch (err) {
       setError("An error occurred while adding the note");
       console.error(err);
-    } finally {
-      setLoadingAdd(false);
     }
   };
 
@@ -129,7 +123,6 @@ const Notes: React.FC = () => {
           body: JSON.stringify(updatedNote),
         });
         if (response.ok) {
-         
           setNotes((prevNotes) =>
             prevNotes.map((note) =>
               note.id === editingNote.id ? updatedNote : note
@@ -163,7 +156,7 @@ const Notes: React.FC = () => {
 
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
-        <NoteForm onAddNote={handleAddNote} loadingAdd={loadingAdd} />
+        <NoteForm onInputChange={handleAddNote} />
 
         {loadingFetch && <p>Loading notes...</p>}
 

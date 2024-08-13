@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaBell, FaMoon, FaSun, FaWindowClose } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
 import { RiLogoutCircleLine } from "react-icons/ri";
@@ -23,6 +23,8 @@ const Navbar: React.FC = () => {
   const [uniqueUsername, setUniqueUsername] = useState<string>("");
 
   const { isAuthenticated, logout } = useAuth();
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const fetchNotes = async () => {
     try {
@@ -55,6 +57,21 @@ const Navbar: React.FC = () => {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
+
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -119,7 +136,10 @@ const Navbar: React.FC = () => {
                   alt="User avatar"
                 />
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 shadow-lg rounded-md py-1">
+                  <div
+                    ref={dropdownRef}
+                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 shadow-lg rounded-md py-1"
+                  >
                     <Link
                       to="/login"
                       className="block px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-900"

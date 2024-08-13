@@ -1,61 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import toast from "react-hot-toast";
 
 interface NoteFormProps {
-  onAddNote: (title: string, content: string) => void;
-  loadingAdd: boolean;
+  onInputChange: (title: string, content: string) => void;
 }
 
-const NoteForm: React.FC<NoteFormProps> = ({ onAddNote, loadingAdd }) => {
+const NoteForm: React.FC<NoteFormProps> = ({ onInputChange }) => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const [showContent, setShowContent] = useState<boolean>(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onAddNote(title, content);
-    setTitle("");
-    setContent("");
+  const handleClickOutside = (e: MouseEvent) => {
+    if (formRef.current && !formRef.current.contains(e.target as Node)) {
+      if (title.trim() || content.trim()) {
+        onInputChange(title, content);
+        setTitle("");
+        setContent("");
+        toast.success("Note Created! 😊");
+      }
+      setShowContent(false);
+    }
   };
+
+  const handleClose = () => {
+    if (title.trim() || content.trim()) {
+      onInputChange(title, content);
+      setTitle("");
+      setContent("");
+      toast.success("Note Created! 😊");
+    }
+    setShowContent(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [title, content]);
 
   return (
     <form
-      onSubmit={handleSubmit}
-      className="mb-6 bg-white dark:bg-gray-800 p-4 rounded-md shadow-md"
+      ref={formRef}
+      className="mb-6 bg-white dark:bg-gray-800 p-1 rounded-md shadow-md"
     >
-      <input
-        type="text"
+      <textarea
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        onFocus={() => setShowContent(true)}
         placeholder="Title"
-        className="w-full px-3 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-      />
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Content"
-        rows={4}
-        className="w-full px-3 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-      ></textarea>
-      <button
-        type="submit"
-        className={`w-full ${
-          loadingAdd
-            ? "bg-white text-gray-700 border-gray-300"
-            : "bg-blue-500 text-white"
-        } px-4 py-2 rounded-md transition duration-300 ${
-          loadingAdd ? "hover:bg-gray-100" : "hover:bg-blue-600"
-        }`}
-        disabled={loadingAdd}
+        className="w-full px-3 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
       >
-        {loadingAdd ? (
-          <img
-            src="https://cdn-icons-gif.flaticon.com/17098/17098052.gif"
-            alt="Loading"
-            className="inline-block h-5 w-5"
-          />
-        ) : (
-          "Add Note"
-        )}
-      </button>
+        {" "}
+      </textarea>
+      {showContent && (
+        <div className="">
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Content"
+            className="w-full md:h-[200px]  px-3 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          ></textarea>
+          <button
+            type="button"
+            onClick={handleClose}
+            className="bg-gray-500 text-white px-2 py-[2px] text-sm rounded-md transition duration-300 hover:bg-green-600"
+          >
+            Close
+          </button>
+        </div>
+      )}
     </form>
   );
 };
