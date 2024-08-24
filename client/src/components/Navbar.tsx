@@ -15,6 +15,7 @@ interface Note {
   username: string;
 }
 
+
 const Navbar: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
