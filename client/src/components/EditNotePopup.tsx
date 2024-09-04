@@ -7,6 +7,7 @@ interface Note {
   content: string;
 }
 
+
 interface EditNotePopupProps {
   note: Note | null;
   loadingUpdate: boolean;
