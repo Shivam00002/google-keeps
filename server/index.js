@@ -8,12 +8,13 @@ const notesRoutes = require("./routes/notes");
 async function StartServer() {
   const app = express();
 
+
   const corsOptions = {
-    origin: [process.env.FRONTEND_URL, "https://dainsta-notes-g4in.vercel.app" ,"http://localhost:3000"],
+    origin: [process.env.FRONTEND_URL, "https://dainsta-notes-g4in.vercel.app", "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   };
-
+  app.use('/images', express.static('images'));
   app.use(cors(corsOptions));
   app.use(express.json());
   app.use(cookieParser());

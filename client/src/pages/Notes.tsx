@@ -11,6 +11,7 @@ interface Note {
   id: string;
   title: string;
   content: string;
+  file_url?: string;
 }
 
 const Notes: React.FC = () => {
@@ -54,18 +55,29 @@ const Notes: React.FC = () => {
     }
   };
 
-  const handleAddNote = async (title: string, content: string) => {
+  const handleAddNote = async (
+    title: string,
+    content: string,
+    file: File | null
+  ) => {
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    if (file) {
+      formData.append("file", file);
+    }
+
     try {
       const response = await fetch(`${backend_url}/notes`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ title, content }),
+        body: formData,
       });
       if (response.ok) {
         await fetchNotes();
+        toast.success("Note Created! 😊");
       } else {
         throw new Error("Failed to add note");
       }

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import 'animate.css';
+import "animate.css";
+import { backend_url } from "../libs/url";
 
 interface Note {
   id: string;
   title: string;
   content: string;
+  file_url?: string;
 }
 
 interface NoteItemProps {
@@ -21,10 +23,20 @@ const NoteItem: React.FC<NoteItemProps> = ({
   deletingNoteId,
 }) => {
   const [isNew, setIsNew] = useState(true);
+  const [imageError, setImageError] = useState<string | null>(null);
 
   useEffect(() => {
     setTimeout(() => setIsNew(false), 1000);
   }, []);
+
+  const handleImageError = (
+    error: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    console.error("Image failed to load:", error);
+    setImageError("Failed to load image");
+  };
+
+  console.log("note", note);
 
   return (
     <div
@@ -46,6 +58,20 @@ const NoteItem: React.FC<NoteItemProps> = ({
       >
         {note.content}
       </p>
+      {note.file_url && (
+        <div className="mb-4">
+          <img
+            src={`${backend_url}${note.file_url}`}
+            alt="Note attachment"
+            onError={handleImageError}
+            className={`w-full md:w-44 md:h-44 h-auto rounded-md ${
+              isNew ? "animate__animated animate__fadeIn" : ""
+            }`}
+          />
+        
+         
+        </div>
+      )}
       <div className="flex justify-end space-x-2">
         <button
           onClick={() => onEdit(note)}
