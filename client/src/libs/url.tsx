@@ -1,2 +1,1 @@
-export const backend_url="http://localhost:3000"
-///"https://dainsta-notes.vercel.app"
+export const backend_url="https://dainsta-notes.vercel.app"
