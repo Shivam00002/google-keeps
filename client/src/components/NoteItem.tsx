@@ -58,7 +58,7 @@ const NoteItem: React.FC<NoteItemProps> = ({
       >
         {note.content}
       </p>
-      {note.file_url && (
+      {/* {note.file_url && (
         <div className="mb-4">
           <img
             src={`${backend_url}${note.file_url}`}
@@ -71,7 +71,7 @@ const NoteItem: React.FC<NoteItemProps> = ({
         
          
         </div>
-      )}
+      )} */}
       <div className="flex justify-end space-x-2">
         <button
           onClick={() => onEdit(note)}

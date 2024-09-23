@@ -81,7 +81,7 @@ const NoteForm: React.FC<NoteFormProps> = ({ onInputChange }) => {
   rows={5}
 />
 
-          <div className="flex border px-2 rounded-md items-center gap-x-3 mb-2">
+          {/* <div className="flex border px-2 rounded-md items-center gap-x-3 mb-2">
             <div className="flex items-center space-x-2">
               <span className="text-gray-400 dark:bg-gray-700 dark:text-white">
                 upload photo
@@ -118,12 +118,12 @@ const NoteForm: React.FC<NoteFormProps> = ({ onInputChange }) => {
                 </div>
               )}
             </div>
-          </div>
+          </div> */}
 
           <button
             type="button"
             onClick={handleClose}
-            className="right-2 bottom-1 md:bottom-[2px] absolute text-white px-1 md:px-1 py-[1px] md:py-[2px] text-[10px] md:text-sm rounded-md transition duration-300 hover:bg-gray-300"
+            className="absolute right-3 bottom-4 text-white px-1 md:px-1 py-[1px] md:py-[2px] text-[10px] md:text-sm rounded-md transition duration-300 hover:bg-gray-300"
           >
             ❌
           </button>
