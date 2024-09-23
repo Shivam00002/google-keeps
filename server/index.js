@@ -8,13 +8,12 @@ const notesRoutes = require("./routes/notes");
 async function StartServer() {
   const app = express();
 
-
   const corsOptions = {
-    origin: [process.env.FRONTEND_URL, "https://dainsta-notes-g4in.vercel.app", "http://localhost:3000"],
+    origin: [process.env.FRONTEND_URL, "https://dainsta-notes-g4in.vercel.app", "http://localhost:3001"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   };
-  app.use('/images', express.static('images'));
+  app.use('/public', express.static('public'));
   app.use(cors(corsOptions));
   app.use(express.json());
   app.use(cookieParser());
@@ -27,6 +26,7 @@ async function StartServer() {
   app.use("/auth", authRoutes);
   app.use("/notes", notesRoutes);
 
+
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
@@ -34,3 +34,4 @@ async function StartServer() {
 StartServer().catch((error) => {
   console.log("error", error);
 });
+

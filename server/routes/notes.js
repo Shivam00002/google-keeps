@@ -8,7 +8,7 @@ const path = require("path");
 // Multer configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'images/');
+    cb(null, 'public/');
   },
   filename: (req, file, cb) => {
     cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
@@ -74,9 +74,10 @@ router.post("/", verifyAuth, upload.single('file'), async (req, res) => {
       username,
       title,
       content,
-      file_url: file ? `/images/${file.filename}` : null,
+      file_url: file ? `/public/${file.filename}` : null,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     });
+
 
     res.status(201).json({ id: newNote.id });
   } catch (error) {
