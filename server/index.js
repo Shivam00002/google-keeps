@@ -9,7 +9,7 @@ async function StartServer() {
   const app = express();
 
   const corsOptions = {
-    origin: [process.env.FRONTEND_URL, "https://dainsta-notes-g4in.vercel.app", "http://localhost:3000"],
+    origin: [process.env.FRONTEND_URL, "https://google-keeps-three.vercel.app", "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   };
