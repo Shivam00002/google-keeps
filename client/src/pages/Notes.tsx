@@ -162,15 +162,17 @@ const Notes: React.FC = () => {
   return (
     <div className="container max-w-[1080px] mx-auto px-4 py-8">
       <div className={`${isEditPopupOpen ? "blur-sm" : ""}`}>
-        <h1 className="md:text-[18px]  text-[20px] font-bold mb-6 text-blue-400 dark:text-white">
+        <h1 className="md:text-[17px]  text-[20px] font-bold mb-6 text-blue-400 dark:text-white">
           Note-Making Made Simple 📒
         </h1>
 
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-
         <NoteForm onInputChange={handleAddNote} />
 
-        {loadingFetch && <p>Loading notes...</p>}
+        {loadingFetch && (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900 dark:border-gray-100"></div>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {notes.map((note) => (

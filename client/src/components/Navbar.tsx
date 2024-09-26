@@ -7,6 +7,7 @@ import { IoMenu } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { backend_url } from "../libs/url";
+import toast from "react-hot-toast";
 
 interface Note {
   id: string;
@@ -95,9 +96,13 @@ const Navbar: React.FC = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const Notification=()=>{
+   return  toast.success("You don't have any notifications yet! 🤩");
+  }
+
   return (
-    <nav className="bg-white dark:bg-slate-950 shadow-lg border">
-      <div className="max-w-full h-fit px-4 sm:px-6 lg:px-8">
+    <nav className="bg-white dark:bg-slate-950 shadow-lg border border-b-[1px] border-t-0 border-l-0 border-r-0 ">
+      <div className="max-w-full h-fit px-4 sm:px-6 lg:px-3">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
@@ -128,15 +133,15 @@ const Navbar: React.FC = () => {
           </div>
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6 space-x-4">
-              <div className="px-4 py-2 text-sm font-semibold dark:text-gray-200">
+              <div className="px-4 py-2 text-[12px] font-semibold dark:text-gray-200">
                 {isAuthenticated && (
                   <div>
-                    <span className="text-blue-500">Welcome 😊 </span>
+                    <span className="text-blue-500 ">Welcome 😊 </span>
                     <span className="text-orange-600">{uniqueUsername} 🔥</span>
                   </div>
                 )}
               </div>
-              <button className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 transition-colors duration-200">
+              <button onClick={()=>Notification()} className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 transition-colors duration-200">
                 <FaBell className="h-6 w-6" />
               </button>
               <button
@@ -163,19 +168,19 @@ const Navbar: React.FC = () => {
                   >
                     <Link
                       to="/login"
-                      className="block px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200"
+                      className="block px-4 py-2 text-[12px] font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200"
                     >
                       Login 😊
                     </Link>
                     <Link
                       to="/signup"
-                      className="block px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200"
+                      className="block px-4 py-2 text-[12px] font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200"
                     >
                       Signup 🙏
                     </Link>
                     <Link
                       to="/"
-                      className="block px-4 py-2 text-sm text-gray-700 font-semibold dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200"
+                      className="block px-4 py-2 text-[12px] text-gray-700 font-semibold dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200"
                     >
                       Home 🏠
                     </Link>
@@ -183,7 +188,7 @@ const Navbar: React.FC = () => {
                       <Link
                         onClick={() => logout()}
                         to="/"
-                        className="block px-4 py-2 text-sm text-red-700 font-semibold dark:text-red-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200"
+                        className="block px-4 py-2 text-[12px] text-red-700 font-semibold dark:text-red-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200"
                       >
                         Logout 🔴
                       </Link>
@@ -244,7 +249,7 @@ const Navbar: React.FC = () => {
             <IoHomeOutline className="h-6 w-6 mr-2" />
             <span>Home</span>
           </Link>
-          <button className="flex items-center w-full text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
+          <button onClick={()=>Notification()}  className="flex items-center w-full text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
             <FaBell className="h-6 w-6 mr-2" />
             <span>Notifications</span>
           </button>

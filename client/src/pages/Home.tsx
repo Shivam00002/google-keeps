@@ -38,14 +38,13 @@ const Home: React.FC = () => {
           <Link to="/login" className="text-blue-600 hover:underline">
             Log In
           </Link>
-        </p>
-
-        <p className="text-center md:text-[12px] text-[12px] md:text-sm text-gray-900 dark:text-white mt-2">
-          Don't have an account?{" "}
+          {" "}   <br />  Don't have an account?{" "}
           <Link to="/signup" className="text-blue-600 hover:underline">
             Sign up
           </Link>
         </p>
+
+      
       </div>
     </div>
   );
