@@ -55,7 +55,7 @@ const Signup: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center p-2">
-      <div className="bg-white text-gray-900 dark:text-white dark:bg-slate-950 p-8 rounded-lg shadow-md w-full max-w-md">
+      <div className="bg-white md:h-[450px]  text-gray-900 dark:text-white dark:bg-slate-950 p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-2">
           Sign Up
         </h1>
@@ -149,12 +149,12 @@ const Signup: React.FC = () => {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
+            {/* <div className="relative flex justify-center text-sm">
               <span className="px-2 bg-white text-gray-500">or</span>
-            </div>
+            </div> */}
           </div>
 
-          <div className="mt-6 space-y-4">
+          {/* <div className="mt-6 space-y-4">
             <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStiZIUhPzyamlPDOS8XDKcZM8Rcg6gofLx_g&s"
@@ -163,7 +163,7 @@ const Signup: React.FC = () => {
               />
               Sign up with Google
             </button>
-          </div>
+          </div> */}
         </div>
 
         <p className="text-center text-xs text-gray-900 dark:text-white mt-8">

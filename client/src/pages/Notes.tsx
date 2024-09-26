@@ -162,7 +162,7 @@ const Notes: React.FC = () => {
   return (
     <div className="container max-w-[1080px] mx-auto px-4 py-8">
       <div className={`${isEditPopupOpen ? "blur-sm" : ""}`}>
-        <h1 className="md:text-3xl text-[20px] font-bold mb-6 text-blue-500 dark:text-white">
+        <h1 className="md:text-[18px]  text-[20px] font-bold mb-6 text-blue-400 dark:text-white">
           Note-Making Made Simple 📒
         </h1>
 
